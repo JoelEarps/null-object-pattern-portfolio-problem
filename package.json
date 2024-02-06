@@ -1,0 +1,12 @@
+{
+  "name": "NullObjectPortfolioProblem",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/JoelEarps/null-object-pattern-portfolio-problem",
+  "author": "Joel Earps <joel.earps@zenobe.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "global": "^4.4.0",
+    "typescript": "^5.3.3"
+  }
+}
