@@ -9,10 +9,15 @@
     "@babel/core": "^7.23.9",
     "@babel/preset-env": "^7.23.9",
     "@babel/preset-typescript": "^7.23.3",
+    "@types/faker": "^6.6.9",
     "@types/jest": "^29.5.12",
     "babel-jest": "^29.7.0",
     "global": "^4.4.0",
     "jest": "^29.7.0",
     "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^8.4.1",
+    "console-table-printer": "^2.12.0"
   }
 }
