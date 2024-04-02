@@ -1,11 +1,13 @@
+import { Dictionary } from "console-table-printer/dist/src/models/common";
+
 export interface SuccessfulReturn {
   name: string;
-  pricePerShare: number;
-  numberOfShares: number;
-  totalShareValue: number;
+  pricePerShare: number | null;
+  numberOfShares: number | null;
   statusMessage: HttpStatusMessage;
   statusCode: Number;
   calculateSharePrice(): void;
+  generateTableRow(): Dictionary;
 }
 
 export enum HttpStatusMessage {
@@ -14,3 +16,14 @@ export enum HttpStatusMessage {
   CLIENT_ERROR,
   SERVER_ERROR,
 }
+
+export type SuccessfulReturnRowDict = {
+  rowObject: SuccessfulReturnRowInfo;
+  colour: string;
+};
+
+type SuccessfulReturnRowInfo = {
+  name: string;
+  value: number | null;
+  number_of_shares: number | null;
+};
