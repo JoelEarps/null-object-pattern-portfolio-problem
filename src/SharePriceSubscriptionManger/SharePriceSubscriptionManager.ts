@@ -18,9 +18,6 @@ export class SharePriceSubscriptionManager {
   }
 
   public fetchPortfolioData(): Set<PortfolioReturn | NullReturn> {
-    setTimeout(() => {
-      console.log(`Fetching data for ${this.userName}`);
-    }, 5000);
     const returnSet = new Set<PortfolioReturn | NullReturn>();
     for (
       let fetchFakeIterator: number = 0;

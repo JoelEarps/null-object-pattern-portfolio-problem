@@ -7,22 +7,27 @@ import {
 import { RowOptionsRaw } from "console-table-printer/dist/src/utils/table-helpers";
 
 export class PortfolioReturn implements SuccessfulReturn {
+  private totalShareValue: number;
   constructor(
     public name: string,
     public pricePerShare: number,
     public numberOfShares: number,
     public statusMessage: HttpStatusMessage,
     public statusCode: number
-  ) {}
+  ) {
+    this.totalShareValue = this.pricePerShare * this.numberOfShares;
+  }
   public calculateSharePrice = (): number => {
     console.info("Valid Portfolio Item found, calculating");
-    return this.pricePerShare * this.numberOfShares;
+    return this.totalShareValue;
   };
+
   public generateTableRow(): SuccessfulReturnRowDict {
     const rowObject = {
       name: this.name,
-      value: this.pricePerShare,
+      share_price: this.pricePerShare,
       number_of_shares: this.numberOfShares,
+      total_shares_value: Math.round(this.totalShareValue).toFixed(2),
     };
     return { rowObject, colour: "green" };
   }

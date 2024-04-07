@@ -23,8 +23,9 @@ export class NullReturn implements SuccessfulReturn {
   public generateTableRow(): SuccessfulReturnRowDict {
     const rowObject = {
       name: this.name,
-      value: this.pricePerShare,
+      share_price: this.pricePerShare,
       number_of_shares: this.numberOfShares,
+      total_shares_value: null,
     };
     return { rowObject, colour: "red" };
   }

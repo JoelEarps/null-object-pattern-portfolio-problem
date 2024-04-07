@@ -24,6 +24,7 @@ export type SuccessfulReturnRowDict = {
 
 type SuccessfulReturnRowInfo = {
   name: string;
-  value: number | null;
+  share_price: number | null;
   number_of_shares: number | null;
+  total_shares_value: string | null;
 };

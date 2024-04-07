@@ -2,6 +2,7 @@ import { PortfolioReturn } from "../Interfaces/PortfolioReturns/PortfolioInfoRet
 import { SharePriceSubscriptionManager } from "../SharePriceSubscriptionManger/SharePriceSubscriptionManager";
 import { NullReturn } from "../Interfaces/PortfolioReturns/NullReturn";
 import { Table, printTable } from "console-table-printer";
+import { HttpStatusMessage } from "../Interfaces/PortfolioReturns/SuccessfulReturn.interface";
 
 export class PortfolioManager {
   private subscriptionRawDataSet!: Set<PortfolioReturn | NullReturn>;
@@ -20,9 +21,6 @@ export class PortfolioManager {
     this.calculatePortfolioValue();
   }
 
-  private receiveSharePriceUpdate(): void {
-    // Part receive an update changing one of the null values/ receive a periodic update
-  }
   private calculatePortfolioValue(): void {
     let total: number = 0;
     let totalNotNull: number = 0;
@@ -54,6 +52,38 @@ export class PortfolioManager {
       `Number of Stocks that could not be calculated: ${this.nullNumber}`
     );
   }
+
+  public checkStockExists = (stockName: string): boolean => {
+    console.log("Checking stock exists");
+    let stockFound: boolean = false;
+    this.subscriptionRawDataSet.forEach((rawDataItem) => {
+      if (rawDataItem.name == stockName) stockFound = true;
+    });
+    return stockFound;
+  };
+
+  public updatePortfolioValue = (
+    stockName: string,
+    price: number,
+    amount: number
+  ): void => {
+    const updatedSetItem = new PortfolioReturn(
+      stockName,
+      price,
+      amount,
+      HttpStatusMessage.SUCCESS,
+      204
+    );
+    this.subscriptionRawDataSet.forEach((rawDataItem) => {
+      if (rawDataItem.name == stockName) {
+        console.log("Found item in set, updating...");
+        this.subscriptionRawDataSet.delete(rawDataItem);
+      }
+    });
+    this.subscriptionRawDataSet.add(updatedSetItem);
+    console.log("Data Set Updated");
+    this.calculatePortfolioValue();
+  };
 
   public printAllPortfolioInfo(): void {
     let rows = [];
