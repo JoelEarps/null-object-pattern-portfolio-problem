@@ -2,6 +2,7 @@ import { NullReturn } from "../Interfaces/PortfolioReturns/NullReturn";
 import { PortfolioReturn } from "../Interfaces/PortfolioReturns/PortfolioInfoReturn";
 import { HttpStatusMessage } from "../Interfaces/PortfolioReturns/SuccessfulReturn.interface";
 import { SharePriceSubscriptionManager } from "../SharePriceSubscriptionManger/SharePriceSubscriptionManager";
+import { logger } from "../logger/logger";
 import { PortfolioManager } from "./PortfolioManager";
 
 describe("PortfolioManager", () => {
@@ -9,7 +10,7 @@ describe("PortfolioManager", () => {
     SharePriceSubscriptionManager.prototype.fetchPortfolioData = jest
       .fn()
       .mockImplementation(() => {
-        console.log("Creating Fake Data for Test");
+        logger.info("Creating Fake Data for Test");
         const nullReturn = new NullReturn(
           "stock1",
           null,

@@ -2,6 +2,7 @@ import { faker } from "@faker-js/faker";
 import { PortfolioReturn } from "../Interfaces/PortfolioReturns/PortfolioInfoReturn";
 import { NullReturn } from "../Interfaces/PortfolioReturns/NullReturn";
 import { HttpStatusMessage } from "../Interfaces/PortfolioReturns/SuccessfulReturn.interface";
+import { logger } from "../logger/logger";
 
 export class SharePriceSubscriptionManager {
   public userOnline: boolean;
@@ -9,7 +10,7 @@ export class SharePriceSubscriptionManager {
   private url: string = "www.example-trading.com";
   constructor(private userName: String) {
     this.userOnline = false;
-    console.log("Waiting for user to come online");
+    logger.debug("Waiting for user to come online");
     this.randomDataAmount = faker.number.int({ min: 3, max: 10 });
   }
 
@@ -25,7 +26,7 @@ export class SharePriceSubscriptionManager {
       fetchFakeIterator++
     ) {
       if (fetchFakeIterator % 3 == 0) {
-        console.log("Null Return Triggered");
+        logger.debug("Null Return Triggered");
         returnSet.add(
           new NullReturn(
             faker.company.name(),

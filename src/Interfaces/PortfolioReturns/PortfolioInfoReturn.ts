@@ -5,6 +5,7 @@ import {
   SuccessfulReturnRowDict,
 } from "./SuccessfulReturn.interface";
 import { RowOptionsRaw } from "console-table-printer/dist/src/utils/table-helpers";
+import { logger } from "../../logger/logger";
 
 export class PortfolioReturn implements SuccessfulReturn {
   private totalShareValue: number;
@@ -18,7 +19,7 @@ export class PortfolioReturn implements SuccessfulReturn {
     this.totalShareValue = this.pricePerShare * this.numberOfShares;
   }
   public calculateSharePrice = (): number => {
-    console.info("Valid Portfolio Item found, calculating");
+    logger.debug("Valid Portfolio Item found, calculating");
     return this.totalShareValue;
   };
 

@@ -3,6 +3,7 @@ import { SharePriceSubscriptionManager } from "../SharePriceSubscriptionManger/S
 import { NullReturn } from "../Interfaces/PortfolioReturns/NullReturn";
 import { Table, printTable } from "console-table-printer";
 import { HttpStatusMessage } from "../Interfaces/PortfolioReturns/SuccessfulReturn.interface";
+import { logger } from "../logger/logger";
 
 export class PortfolioManager {
   private subscriptionRawDataSet!: Set<PortfolioReturn | NullReturn>;
@@ -40,21 +41,20 @@ export class PortfolioManager {
     this.nullNumber = totalNull;
   }
   public printPortfolio(): void {
-    console.log("Printing Portfolio");
-    console.log("--- GENERAL INFO ---");
-    console.log(
+    logger.info("--- GENERAL INFO ---");
+    logger.info(
       `Total Stocks Returned: ${this.totalNumberOfStocksInPartialAverage}`
     );
-    console.log(`Average Portfolio Value: ${this.partialAverage}`);
-    console.log("--------------------");
-    console.log("--- UNKNOWN STOCK RETURNS ---");
-    console.log(
+    logger.info(`Average Portfolio Value: ${this.partialAverage}`);
+    logger.info("--------------------");
+    logger.info("--- UNKNOWN STOCK RETURNS ---");
+    logger.info(
       `Number of Stocks that could not be calculated: ${this.nullNumber}`
     );
   }
 
   public checkStockExists = (stockName: string): boolean => {
-    console.log("Checking stock exists");
+    logger.debug("Checking stock exists");
     let stockFound: boolean = false;
     this.subscriptionRawDataSet.forEach((rawDataItem) => {
       if (rawDataItem.name == stockName) stockFound = true;
@@ -76,12 +76,12 @@ export class PortfolioManager {
     );
     this.subscriptionRawDataSet.forEach((rawDataItem) => {
       if (rawDataItem.name == stockName) {
-        console.log("Found item in set, updating...");
+        logger.debug("Found item in set, updating...");
         this.subscriptionRawDataSet.delete(rawDataItem);
       }
     });
     this.subscriptionRawDataSet.add(updatedSetItem);
-    console.log("Data Set Updated");
+    logger.debug("Data Set Updated");
     this.calculatePortfolioValue();
   };
 

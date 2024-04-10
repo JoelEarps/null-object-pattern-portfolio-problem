@@ -2,9 +2,12 @@ import { SharePriceSubscriptionManager } from "./SharePriceSubscriptionManger/Sh
 import { PortfolioManager } from "./PortfolioManager/PortfolioManager";
 import { createInterface, Interface } from "readline";
 import { TerminalQuestionsThatCanBeAsked } from "./Enums/TerminalQuestions/TerminalQuestion.enum";
+import { logger } from "./logger/logger";
 
 const subscriptionManager = new SharePriceSubscriptionManager("joel.earps");
 const portfolioManager = new PortfolioManager(subscriptionManager);
+
+process.env.LEVEL = "info";
 
 portfolioManager.printPortfolio();
 portfolioManager.printAllPortfolioInfo();
@@ -27,20 +30,18 @@ let updatedName: string;
 let updatedSharePrice: number, updatedShareAmount: number;
 
 terminalInterface.addListener("line", (userUpdateInput: string) => {
-  console.log("Input is: " + userUpdateInput);
-
   switch (questionPointer) {
     case 0:
       portfolioManager.checkStockExists(userUpdateInput)
         ? questionPointer++
-        : console.warn("Invalid stock selected please present a valid one");
+        : logger.warn("Invalid stock selected please present a valid one");
 
       updatedName = userUpdateInput;
       terminalInterface.setPrompt(questionsToBeAsked[questionPointer]);
       terminalInterface.prompt();
       break;
     case 1:
-      console.log("Stock exists, continuing..");
+      logger.debug("Stock exists, continuing..");
       questionPointer++;
       updatedSharePrice = parseFloat(userUpdateInput);
       terminalInterface.setPrompt(questionsToBeAsked[questionPointer]);
@@ -60,15 +61,15 @@ terminalInterface.addListener("line", (userUpdateInput: string) => {
       terminalInterface.prompt();
       break;
     default:
-      console.error("Exceeded boundary and therefore invalid question");
+      logger.error("Exceeded boundary and therefore invalid question");
   }
 });
 
 terminalInterface.addListener("SIGINT", () => {
   if (questionPointer > 0) {
-    console.warn("Please be aware you are leaving whilst in a question loop");
+    logger.warn("Please be aware you are leaving whilst in a question loop");
   }
-  console.log("Thanks for trying");
+  logger.info("Thanks for trying");
   terminalInterface.close();
 });
 

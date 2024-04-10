@@ -5,6 +5,7 @@ import {
   SuccessfulReturnRowDict,
 } from "./SuccessfulReturn.interface";
 import { RowOptionsRaw } from "console-table-printer/dist/src/utils/table-helpers";
+import { logger } from "../../logger/logger";
 
 export class NullReturn implements SuccessfulReturn {
   constructor(
@@ -15,7 +16,7 @@ export class NullReturn implements SuccessfulReturn {
     public statusCode: number
   ) {}
   public calculateSharePrice = (): void => {
-    console.error(
+    logger.debug(
       "Invalid return found, cannot perform calculations on these stocks"
     );
   };
